@@ -16,11 +16,12 @@ datasource db {
 model Movies {
   id String @id @default(cuid()) @unique
   title String
-  director String
+  director Director []
   price Int
   releaseYear Int
   imageUrl String
   orderItems OrderItem[]
+  actorsName Actors []
 }
 
 model Genres {
@@ -44,3 +45,22 @@ model OrderItem {
   quantity Int
   priceAtPurchase Int
 }
+
+model Actors {
+  id String @id @default(cuid()) @unique
+  moviesId String
+  name String
+  description String
+  movie Movies @relation(fields: [moviesId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Director {
+  id String @id @default(cuid()) @unique
+  moviesId String
+  name String
+  description String
+  directorMovie Movies @relation(fields: [moviesId], references: [id])
+  createdAt DateTime @default(now())
+}
+
